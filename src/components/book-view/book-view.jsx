@@ -1,3 +1,5 @@
+import './book-view.scss';
+
 export const BookView = ({ book, onBackClick }) => {
   return (
     <div>
@@ -12,9 +14,7 @@ export const BookView = ({ book, onBackClick }) => {
         <span>Author: </span>
         <span>{book.author}</span>
       </div>
-      <button
-        onClick={onBackClick}>Back
-      </button>
+      <button onClick={onBackClick} className="back-button">Back</button>
     </div>
   );
 };

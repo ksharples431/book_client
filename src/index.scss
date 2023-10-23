@@ -1,4 +1,8 @@
+$primary: SeaGreen;
+$body-bg: Honeydew;
 $color: steelblue;
+
+@import '~bootstrap/scss/bootstrap.scss';
 
 .my-books {
   color: $color;

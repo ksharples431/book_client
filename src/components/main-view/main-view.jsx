@@ -3,6 +3,8 @@ import { BookCard } from '../book-card/book-card';
 import { BookView } from '../book-view/book-view';
 import { LoginView } from '../login-view/login-view';
 import { SignupView } from '../signup-view/signup-view';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 
 export const MainView = () => {
   const storedUser = JSON.parse(localStorage.getItem('email'));
@@ -29,7 +31,7 @@ export const MainView = () => {
 
         const booksFromApi = data.map((book) => {
           return {
-            _id: book._id,
+            id: book._id,
             title: book.title,
             image: book.imagePath,
             description: book.description,
@@ -45,58 +47,48 @@ export const MainView = () => {
     fetchBooks();
   }, [token]);
 
-  if (!user) {
-    return (
-      <>
-        <LoginView
-          onLoggedIn={(user, token) => {
-            setUser(user);
-            setToken(token);
-          }}
-        />
-        or
-        <SignupView
-          onSignedUp={(user, token) => {
-            setUser(user);
-            setToken(token);
-          }}
-        />
-      </>
-    );
-  }
-
-  if (selectedBook) {
-    return (
-      <BookView
-        book={selectedBook}
-        onBackClick={() => setSelectedBook(null)}
-      />
-    );
-  }
-
-  if (books.length === 0) {
-    return <div>The list is empty!</div>;
-  }
-
   return (
-    <div>
-      {books.map((book) => (
-        <BookCard
-          key={book._id}
-          book={book}
-          onBookClick={(newSelectedBook) => {
-            setSelectedBook(newSelectedBook);
-          }}
-        />
-      ))}
-      <button
-        onClick={() => {
-          setUser(null);
-          setToken(null);
-          localStorage.clear();
-        }}>
-        Logout
-      </button>
-    </div>
+    <Row className="justify-content-md-center">
+      {!user ? (
+        <Col md={5}>
+          <LoginView
+            onLoggedIn={(user, token) => {
+              setUser(user);
+              setToken(token);
+            }}
+          />
+          or
+          <SignupView
+            onSignedUp={(user, token) => {
+              setUser(user);
+              setToken(token);
+            }}
+          />
+        </Col>
+      ) : selectedBook ? (
+        <Col md={8} style={{ border: '1px solid black' }}>
+          <BookView
+            style={{ border: '1px solid green' }}
+            book={selectedBook}
+            onBackClick={() => setSelectedBook(null)}
+          />
+        </Col>
+      ) : books.length === 0 ? (
+        <div>The list is empty!</div>
+      ) : (
+        <>
+          {books.map((book) => (
+            <Col className="mb-5" key={book.id} md={3}>
+              <BookCard
+                book={book}
+                onBookClick={(newSelectedBook) => {
+                  setSelectedBook(newSelectedBook);
+                }}
+              />
+            </Col>
+          ))}
+        </>
+      )}
+    </Row>
   );
-};
+  }
