@@ -31,18 +31,35 @@ export const LoginView = ({ onLoggedIn }) => {
       if (response.ok) {
         const data = await response.json();
         console.log('Login response: ', data);
-        
+
         if (data) {
-          localStorage.setItem('user', JSON.stringify(data.email));
-          localStorage.setItem('token', data.token);
-          onLoggedIn(data.email, data.token);
+          localStorage.setItem(
+            'email',
+            JSON.stringify(data.userInfo.email)
+          );
+          localStorage.setItem('id', JSON.stringify(data.userInfo.id));
+          localStorage.setItem(
+            'username',
+            JSON.stringify(data.userInfo.username)
+          );
+          localStorage.setItem(
+            'birthday',
+            JSON.stringify(data.userInfo.birthday)
+          );
+          localStorage.setItem('token', data.userInfo.token);
+          onLoggedIn(data.userInfo.email, data.userInfo.token);
         } else {
           alert('Successful login, but user data not found.');
         }
       } else {
-       console.error('Login request failed with status:', response.status);
-       console.error('Response message:', response.statusText);
-       alert('Something went wrong. Please check your login credentials.');
+        console.error(
+          'Login request failed with status:',
+          response.status
+        );
+        console.error('Response message:', response.statusText);
+        alert(
+          'Something went wrong. Please check your login credentials.'
+        );
       }
     } catch (error) {
       console.error('An error occurred:', error);
