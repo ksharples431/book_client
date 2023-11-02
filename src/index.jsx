@@ -7,12 +7,11 @@ import Container from 'react-bootstrap/Container';
 import { MainView } from './components/main-view/main-view';
 
 import './index.scss';
-import background from './images/bookshelfempty.png';
 
 const MyBooksApp = () => {
   return (
     <Provider store={store}>
-      <div style={{ backgroundImage: `url(${background})` }}>
+      <div>
         <Container>
           <MainView />
         </Container>

@@ -4,6 +4,16 @@ $color: steelblue;
 
 @import '~bootstrap/scss/bootstrap.scss';
 
+
 .my-books {
   color: $color;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background-image: url('./images/bookshelfempty.png'); 
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
 }
