@@ -21,20 +21,25 @@ export const SignupView = ({ onSignedUp }) => {
     };
 
     try {
-      const response = await fetch(process.env.API_URL, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-      });
+      const response = await fetch(
+        'https://radiant-taiga-50059-0319f39be885.herokuapp.com/api/auth/signup',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data),
+        }
+      );
+      console.log(response)
 
       if (response.ok) {
         const data = await response.json();
+        console.log(data)
 
         if (data) {
-          localStorage.setItem('user', data.email);
-          localStorage.setItem('token', data.token);
+          localStorage.setItem('user', JSON.stringify(data.userInfo));
+          localStorage.setItem('token', data.userInfo.token);
           onSignedUp(data.userInfo, data.userInfo.token);
         } else {
           alert('User data not found.');
