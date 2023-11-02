@@ -1,5 +1,6 @@
 import { useState } from 'react';
 
+import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 
@@ -10,42 +11,39 @@ export const SignupView = ({ onSignedUp }) => {
   const [birthday, setBirthday] = useState('');
 
   const handleSubmit = async (event) => {
-  event.preventDefault();
+    event.preventDefault();
 
-  const data = {
-    username: username,
-    email: email,
-    password: password,
-    birthday: birthday
-  };
+    const data = {
+      username: username,
+      email: email,
+      password: password,
+      birthday: birthday,
+    };
 
-  try {
-      const response = await fetch(
-        'http://localhost:8080/api/auth/signup',
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(data),
-        }
-      );
+    try {
+      const response = await fetch(process.env.API_URL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
 
       if (response.ok) {
         const data = await response.json();
-        console.log('Signup response: ', data);
-        
+
         if (data) {
-          localStorage.setItem('user', JSON.stringify(data.email));
+          localStorage.setItem('user', data.email);
           localStorage.setItem('token', data.token);
-          onSignedUp(data.email, data.token);
+          onSignedUp(data.userInfo, data.userInfo.token);
         } else {
-          alert('Successful signup, but user data not found.');
+          alert('User data not found.');
         }
       } else {
-       console.error('Signup request failed with status:', response.status);
-       console.error('Response message:', response.statusText);
-       alert('Something went wrong. Please check your credentials.');
+        console.error(
+          'Signup request failed with status:',
+          response.status
+        );
       }
     } catch (error) {
       console.error('An error occurred:', error);
@@ -53,48 +51,50 @@ export const SignupView = ({ onSignedUp }) => {
   };
 
   return (
-    <Form onSubmit={handleSubmit}>
-      <Form.Group controlId="formUsername">
-        <Form.Label>Username:</Form.Label>
-        <Form.Control
-          type="text"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          required
-          minLength="3"
-        />
-      </Form.Group>
-      <Form.Group controlId="formEmail">
-        <Form.Label>Email:</Form.Label>
-        <Form.Control
-          type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-          minLength="3"
-        />
-      </Form.Group>
-      <Form.Group controlId="formPassword">
-        <Form.Label>Password:</Form.Label>
-        <Form.Control
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
-      </Form.Group>
-      <Form.Group controlId="formBirthday">
-        <Form.Label>Birthday:</Form.Label>
-        <Form.Control
-          type="date"
-          value={birthday}
-          onChange={(e) => setBirthday(e.target.value)}
-          required
-        />
-      </Form.Group>
-      <Button variant="primary" type="submit">
-        Submit
-      </Button>
-    </Form>
+    <Card>
+      <Form onSubmit={handleSubmit}>
+        <Form.Group controlId="formUsername">
+          <Form.Label>Username:</Form.Label>
+          <Form.Control
+            type="text"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            required
+            minLength="3"
+          />
+        </Form.Group>
+        <Form.Group controlId="formEmail">
+          <Form.Label>Email:</Form.Label>
+          <Form.Control
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+            minLength="3"
+          />
+        </Form.Group>
+        <Form.Group controlId="formPassword">
+          <Form.Label>Password:</Form.Label>
+          <Form.Control
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
+        </Form.Group>
+        <Form.Group controlId="formBirthday">
+          <Form.Label>Birthday:</Form.Label>
+          <Form.Control
+            type="date"
+            value={birthday}
+            onChange={(e) => setBirthday(e.target.value)}
+            required
+          />
+        </Form.Group>
+        <Button variant="primary" type="submit">
+          Submit
+        </Button>
+      </Form>
+    </Card>
   );
 };

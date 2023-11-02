@@ -8,6 +8,7 @@ export const LoginView = ({ onLoggedIn }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+
   const handleSubmit = async (event) => {
     event.preventDefault();
 
@@ -18,7 +19,7 @@ export const LoginView = ({ onLoggedIn }) => {
 
     try {
       const response = await fetch(
-        'http://localhost:8080/api/auth/login',
+        'https://radiant-taiga-50059-0319f39be885.herokuapp.com/api/auth/login',
         {
           method: 'POST',
           headers: {
@@ -34,20 +35,20 @@ export const LoginView = ({ onLoggedIn }) => {
 
         if (data) {
           localStorage.setItem(
-            'email',
-            JSON.stringify(data.userInfo.email)
+            'user',
+            JSON.stringify(data.userInfo)
           );
-          localStorage.setItem('id', JSON.stringify(data.userInfo.id));
-          localStorage.setItem(
-            'username',
-            JSON.stringify(data.userInfo.username)
-          );
-          localStorage.setItem(
-            'birthday',
-            JSON.stringify(data.userInfo.birthday)
-          );
+          // localStorage.setItem('id', JSON.stringify(data.userInfo.id));
+          // localStorage.setItem(
+          //   'username',
+          //   JSON.stringify(data.userInfo.username)
+          // );
+          // localStorage.setItem(
+          //   'birthday',
+          //   JSON.stringify(data.userInfo.birthday)
+          // );
           localStorage.setItem('token', data.userInfo.token);
-          onLoggedIn(data.userInfo.email, data.userInfo.token);
+          onLoggedIn(data.userInfo, data.userInfo.token);
         } else {
           alert('Successful login, but user data not found.');
         }

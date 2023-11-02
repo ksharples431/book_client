@@ -24,9 +24,12 @@ export const MainView = () => {
 
     const fetchBooks = async () => {
       try {
-        const response = await fetch('http://localhost:8080/api/books', {
-          headers: { Authorization: `Bearer ${token}` },
-        });
+        const response = await fetch(
+          'https://radiant-taiga-50059-0319f39be885.herokuapp.com/api/books',
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        );
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
@@ -48,6 +51,7 @@ export const MainView = () => {
     };
 
     fetchBooks();
+    console.log(books)
   }, [token]);
 
   return (
@@ -108,7 +112,12 @@ export const MainView = () => {
                   <Navigate to="/login" replace />
                 ) : (
                   <Col md={8}>
-                    <ProfileView user={user} />
+                    <ProfileView
+                      user={user}
+                      token={token}
+                      setUser={setUser}
+                      books={books}
+                    />
                   </Col>
                 )}
               </>
