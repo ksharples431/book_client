@@ -13229,4 +13229,64 @@ img {
   width: 100%;
 }
 
+.navbar {
+  background-color: #edf1a9;
+  height: 80px;
+}
+
+.cards {
+  background-color: #edf1a9;
+  margin-top: 50px;
+  margin-left: 50px;
+  margin-right: 50px;
+}
+
+.fav-book {
+  margin-bottom: 15px;
+}
+
+.fav-book figure {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  position: relative;
+  overflow: hidden;
+}
+
+.fav-book figure img {
+  height: 200px;
+}
+
+.books {
+  margin-top: 50px;
+}
+
+.btn-container {
+  text-align: center;
+  margin-top: 15px;
+}
+
+.delete {
+  margin-left: 20px;
+}
+
+.update {
+  margin-right: 20px;
+}
+
+.form-fields {
+  margin-top: 10px;
+}
+
+.fav-title {
+  text-align: center;
+}
+
+.card-title {
+  margin-top: 50px;
+}
+
+.titles {
+  font-weight: bold;
+}
+
 /*# sourceMappingURL=index.ce1d6491.css.map */

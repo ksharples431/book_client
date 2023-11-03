@@ -1,5 +1,8 @@
-import React, { useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useState } from 'react';
+
+import { Container, Row, Col, Card } from 'react-bootstrap';
+
+import './profile-view.scss';
 
 import UserInfo from './user-info';
 import FavoriteBooks from './favorite-books';
@@ -11,12 +14,20 @@ export const ProfileView = ({ user, token, books, onLoggedIn }) => {
   const [email, setEmail] = useState(user.email);
   const [birthday, setBirthday] = useState(user.birthday);
 
-  const favBooks = books.filter((book) => user.favorites.includes(book.id));
+  const favBooks = books.filter((book) =>
+    user.favorites.includes(book.id)
+  );
+
+  const originalDateString = user.birthday
+  const originalDate = new Date(originalDateString);
+  const day = (originalDate.getDate() + 1).toString().padStart(2, '0'); 
+  const month = (originalDate.getMonth() + 1).toString().padStart(2, '0'); 
+  const year = originalDate.getFullYear();
+  const newBirthday = `${month}-${day}-${year}`;
+
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log(user)
-    console.log(favBooks)
 
     const data = {
       username: username,
@@ -27,8 +38,7 @@ export const ProfileView = ({ user, token, books, onLoggedIn }) => {
 
     try {
       const response = await fetch(
-        `https://radiant-taiga-50059-0319f39be885.herokuapp.com/api/users/id/${username}`, // use the id parameter from the URL
-        // `http://localhost:5000/api/users/profile`, // use the id parameter from the URL
+        `https://radiant-taiga-50059-0319f39be885.herokuapp.com/api/users/id/${username}`,
         {
           method: 'PATCH',
           headers: {
@@ -51,7 +61,6 @@ export const ProfileView = ({ user, token, books, onLoggedIn }) => {
           throw new Error('Update failed');
         }
       }
-
     } catch (error) {
       console.error(
         'Error occurred while trying to update profile:',
@@ -61,11 +70,30 @@ export const ProfileView = ({ user, token, books, onLoggedIn }) => {
   };
 
   return (
-    <>
-    <UserInfo name={user.username} email={user.email} />
-    <UpdateUser user={user} handleSubmit={handleSubmit} />
-    <FavoriteBooks books={favBooks} />
-      
-    </>
+    <Container>
+      <Row>
+        <Col>
+          <Card className="cards">
+            <Card.Header className="fav-title">My Info</Card.Header>
+            <Card.Body>
+              <UserInfo
+                username={user.username}
+                email={user.email}
+                birthday={newBirthday}
+              />
+            </Card.Body>
+          </Card>
+        </Col>
+        <Col>
+          <Card className="cards">
+            <Card.Header className="fav-title">Update Profile</Card.Header>
+            <Card.Body>
+              <UpdateUser user={user} handleSubmit={handleSubmit} />
+            </Card.Body>
+          </Card>
+        </Col>
+      </Row>
+      <FavoriteBooks books={favBooks} />
+    </Container>
   );
 };

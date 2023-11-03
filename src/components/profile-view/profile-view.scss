@@ -1,0 +1,53 @@
+.cards {
+  margin-top: 50px;
+  margin-right: 50px;
+  margin-left: 50px;
+  background-color: #edf1a9
+}
+
+.fav-book {
+  margin-bottom: 15px;
+  figure {
+    position: relative;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    img {
+      height: 200px;
+    }
+  }
+}
+
+.books {
+  margin-top: 50px;
+}
+
+.btn-container {
+  margin-top: 15px;
+  text-align: center
+}
+
+.delete {
+  margin-left: 20px
+}
+
+.update {
+  margin-right: 20px
+}
+
+.form-fields{
+  margin-top: 10px
+}
+
+.fav-title {
+    text-align: center;
+}
+
+.card-title {
+  margin-top: 50px;
+
+}
+
+.titles {
+  font-weight: bold;
+}

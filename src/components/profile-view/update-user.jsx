@@ -3,15 +3,15 @@ import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
 
-function UpdateUser({ user }) {
+import './profile-view.scss';
+
+function UpdateUser({ user, handleSubmit }) {
+
 
   return (
-    <Card>
-  <Card.Header>Profile Information</Card.Header>
-  <Card.Body>
     <Form onSubmit={handleSubmit}>
       <Form.Group controlId="formUsername">
-        <Form.Label>Username</Form.Label>
+        <Form.Label className="form-fields">Username</Form.Label>
         <Form.Control
           type="text"
           placeholder="Enter username"
@@ -21,17 +21,17 @@ function UpdateUser({ user }) {
       </Form.Group>
 
       <Form.Group controlId="formPassword">
-        <Form.Label>Password</Form.Label>
+        <Form.Label className="form-fields">Password</Form.Label>
         <Form.Control
           type="password"
           placeholder="Enter new password"
-          value={password}
+          value={user.password}
           onChange={(event) => setPassword(event.target.value)}
         />
       </Form.Group>
 
       <Form.Group controlId="formEmail">
-        <Form.Label>Email</Form.Label>
+        <Form.Label className="form-fields">Email</Form.Label>
         <Form.Control
           type="email"
           placeholder="Enter email"
@@ -41,7 +41,7 @@ function UpdateUser({ user }) {
       </Form.Group>
 
       <Form.Group controlId="formBirthday">
-        <Form.Label>Birthday</Form.Label>
+        <Form.Label className="form-fields">Birthday</Form.Label>
         <Form.Control
           type="date"
           placeholder="Enter birthday"
@@ -49,10 +49,16 @@ function UpdateUser({ user }) {
           onChange={(event) => setBirthday(event.target.value)}
         />
       </Form.Group>
+      <div className="btn-container">
+        <Button className="update" type="submit" onClick={handleSubmit}>
+          Update
+        </Button>
+        <Button className="delete" onClick={handleSubmit}>
+          Delete Account
+        </Button>
+      </div>
     </Form>
-  </Card.Body>
-</Card>
-  )
+  );
 }
 
 export default UpdateUser
