@@ -39,9 +39,12 @@ export const MainView = () => {
           return {
             id: book._id,
             title: book.title,
-            image: book.imagePath,
-            description: book.description,
             author: book.author.name,
+            description: book.description,
+            genre: book.genre.name,
+            image: book.imagePath,
+            series: book.seriesName,
+            seriesNumber: book.seriesNumber
           };
         });
         setBooks(booksFromApi);
@@ -149,11 +152,25 @@ export const MainView = () => {
                   <Col>The list is empty!</Col>
                 ) : (
                   <>
-                    {books.map((book) => (
-                      <Col className="mb-4" key={book.id} md={3}>
-                        <BookCard book={book} />
-                      </Col>
-                    ))}
+                    {books
+                      .slice()
+                      .sort((a, b) => {
+                        // Compare by author
+                        if (a.author !== b.author) {
+                          return a.author.localeCompare(b.author);
+                        }
+                        // If authors are the same, compare by series name
+                        if (a.seriesName !== b.seriesName) {
+                          return a.seriesName.localeCompare(b.seriesName);
+                        }
+                        // If authors and series names are the same, compare by series number
+                        return a.seriesNumber - b.seriesNumber;
+                      })
+                      .map((book) => (
+                        <Col className="mb-4" key={book.id} md={3}>
+                          <BookCard book={book} />
+                        </Col>
+                      ))}
                   </>
                 )}
               </>

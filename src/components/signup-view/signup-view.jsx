@@ -1,8 +1,6 @@
 import { useState } from 'react';
 
-import Card from 'react-bootstrap/Card';
-import Button from 'react-bootstrap/Button';
-import Form from 'react-bootstrap/Form';
+import { Card, Button, Form } from 'react-bootstrap';
 
 export const SignupView = ({ onSignedUp }) => {
   const [username, setUsername] = useState('');

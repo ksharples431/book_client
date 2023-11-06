@@ -2,11 +2,11 @@ import { useState } from 'react';
 
 import { Container, Row, Col, Card } from 'react-bootstrap';
 
-import './profile-view.scss';
-
 import UserInfo from './user-info';
 import FavoriteBooks from './favorite-books';
 import UpdateUser from './update-user';
+
+import './profile-view.scss';
 
 export const ProfileView = ({ user, token, books, onLoggedIn }) => {
   const [username, setUsername] = useState(user.username);
@@ -14,10 +14,12 @@ export const ProfileView = ({ user, token, books, onLoggedIn }) => {
   const [email, setEmail] = useState(user.email);
   const [birthday, setBirthday] = useState(user.birthday);
 
+  // Filter Favorite Books
   const favBooks = books.filter((book) =>
     user.favorites.includes(book.id)
   );
 
+  // Display Correct Birthday
   const originalDateString = user.birthday
   const originalDate = new Date(originalDateString);
   const day = (originalDate.getDate() + 1).toString().padStart(2, '0'); 

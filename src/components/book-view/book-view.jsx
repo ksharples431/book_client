@@ -8,6 +8,7 @@ export const BookView = ({ books }) => {
   const { bookId } = useParams();
 
   const book = books.find((b) => b.id === bookId);
+  console.log(book)
 
   return (
     <Card className="h-100" key={bookId}>
@@ -20,7 +21,7 @@ export const BookView = ({ books }) => {
         <Card.Text>Book: {book.seriesNumber}</Card.Text>
         <Card.Text>Description: {book.description}</Card.Text>
         <Card.Text>
-          Favorite: {book.favorite}
+          Favorite: {book.featured}
           {/* <FontAwesomeIcon
             icon={faHeart}
             style={{
