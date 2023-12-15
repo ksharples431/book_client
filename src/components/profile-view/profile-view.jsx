@@ -1,14 +1,14 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
-import { Container, Row, Col, Card } from 'react-bootstrap';
+import { Container, Row, Col, Card, Button, Form } from 'react-bootstrap';
 
 import UserInfo from './user-info';
 import FavoriteBooks from './favorite-books';
-import UpdateUser from './update-user';
+import {UpdateUser} from './update-user';
 
 import './profile-view.scss';
 
-export const ProfileView = ({ user, token, books, onLoggedIn }) => {
+export const ProfileView = ({ user, token, books, setUser }) => {
   const [username, setUsername] = useState(user.username);
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState(user.email);
@@ -28,19 +28,18 @@ export const ProfileView = ({ user, token, books, onLoggedIn }) => {
   const newBirthday = `${month}-${day}-${year}`;
 
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
     const data = {
       username: username,
       email: email,
-      password: password,
       birthday: birthday,
     };
 
     try {
       const response = await fetch(
-        `https://radiant-taiga-50059-0319f39be885.herokuapp.com/api/users/id/${username}`,
+        `https://radiant-taiga-50059-0319f39be885.herokuapp.com/api/users/${username}`,
         {
           method: 'PATCH',
           headers: {
@@ -51,14 +50,20 @@ export const ProfileView = ({ user, token, books, onLoggedIn }) => {
         }
       );
 
+      console.log(response)
+
       if (response.ok) {
         const data = await response.json();
         console.log('Update response: ', data);
 
         if (data) {
-          localStorage.setItem('user', JSON.stringify(data.email));
-          localStorage.setItem('token', data.token);
-          onLoggedIn(data.user, data.token); // update the state of the parent component
+          localStorage.setItem('user', JSON.stringify(data.userInfo));
+          localStorage.setItem('token', data.userInfo.token);
+          // setUser(data.userInfo);
+          setUsername(data.userInfo.username)
+          setEmail(data.userInfo.email)
+          setBirthday(data.userInfo.birthday)
+          // onLoggedIn(data.user, data.token); // update the state of the parent component
         } else {
           throw new Error('Update failed');
         }

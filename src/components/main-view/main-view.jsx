@@ -1,13 +1,15 @@
 import { useState, useEffect } from 'react';
+
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+
+import { Row, Col } from 'react-bootstrap';
+
 import { BookCard } from '../book-card/book-card';
 import { BookView } from '../book-view/book-view';
 import { LoginView } from '../login-view/login-view';
 import { SignupView } from '../signup-view/signup-view';
 import { NavBar } from '../nav-bar/nav-bar';
 import { ProfileView } from '../profile-view/profile-view';
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
 
 export const MainView = () => {
   const storedUser = JSON.parse(localStorage.getItem('user'));
@@ -25,7 +27,7 @@ export const MainView = () => {
     const fetchBooks = async () => {
       try {
         const response = await fetch(
-          'https://radiant-taiga-50059-0319f39be885.herokuapp.com/api/books',
+          'https://backendbooks-9697c5937ad6.herokuapp.com/books',
           {
             headers: { Authorization: `Bearer ${token}` },
           }
@@ -54,7 +56,6 @@ export const MainView = () => {
     };
 
     fetchBooks();
-    console.log(books)
   }, [token]);
 
   return (
@@ -118,8 +119,8 @@ export const MainView = () => {
                     <ProfileView
                       user={user}
                       token={token}
-                      setUser={setUser}
                       books={books}
+                      setUser={setUser}
                     />
                   </Col>
                 )}

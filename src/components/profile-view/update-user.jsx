@@ -1,12 +1,13 @@
-import React from "react";
-import Button from 'react-bootstrap/Button';
-import Card from 'react-bootstrap/Card';
-import Form from 'react-bootstrap/Form';
+import { useState } from "react";
+
+import { Button, Form } from 'react-bootstrap';
 
 import './profile-view.scss';
 
-function UpdateUser({ user, handleSubmit }) {
-
+export const UpdateUser  = ({ user, handleSubmit }) => {
+const [username, setUsername] = useState('');
+const [email, setEmail] = useState('');
+const [birthday, setBirthday] = useState('');
 
   return (
     <Form onSubmit={handleSubmit}>
@@ -14,19 +15,9 @@ function UpdateUser({ user, handleSubmit }) {
         <Form.Label className="form-fields">Username</Form.Label>
         <Form.Control
           type="text"
-          placeholder="Enter username"
-          value={user.username}
-          onChange={(event) => setUsername(event.target.value)}
-        />
-      </Form.Group>
-
-      <Form.Group controlId="formPassword">
-        <Form.Label className="form-fields">Password</Form.Label>
-        <Form.Control
-          type="password"
-          placeholder="Enter new password"
-          value={user.password}
-          onChange={(event) => setPassword(event.target.value)}
+          placeholder={user.username}
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
         />
       </Form.Group>
 
@@ -34,9 +25,9 @@ function UpdateUser({ user, handleSubmit }) {
         <Form.Label className="form-fields">Email</Form.Label>
         <Form.Control
           type="email"
-          placeholder="Enter email"
-          value={user.email}
-          onChange={(event) => setEmail(event.target.value)}
+          placeholder={user.email}
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
         />
       </Form.Group>
 
@@ -44,9 +35,9 @@ function UpdateUser({ user, handleSubmit }) {
         <Form.Label className="form-fields">Birthday</Form.Label>
         <Form.Control
           type="date"
-          placeholder="Enter birthday"
-          value={user.birthday.slice(0, 10)}
-          onChange={(event) => setBirthday(event.target.value)}
+          placeholder={user.birthday}
+          value={birthday}
+          onChange={(e) => setBirthday(e.target.value)}
         />
       </Form.Group>
       <div className="btn-container">
@@ -60,8 +51,6 @@ function UpdateUser({ user, handleSubmit }) {
     </Form>
   );
 }
-
-export default UpdateUser
 
 
 

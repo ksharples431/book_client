@@ -19,7 +19,7 @@ export const LoginView = ({ onLoggedIn }) => {
 
     try {
       const response = await fetch(
-        'https://radiant-taiga-50059-0319f39be885.herokuapp.com/api/auth/login',
+        'https://backendbooks-9697c5937ad6.herokuapp.com/auth/login',
         {
           method: 'POST',
           headers: {

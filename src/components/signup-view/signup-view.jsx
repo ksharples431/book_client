@@ -32,6 +32,7 @@ export const SignupView = ({ onSignedUp }) => {
 
       if (response.ok) {
         const data = await response.json();
+        console.log(data)
 
         if (data) {
           localStorage.setItem('user', JSON.stringify(data.userInfo));
